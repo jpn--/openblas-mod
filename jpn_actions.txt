@@ -1,0 +1,28 @@
+moved libopenblas.dll from ./bin to ./lib
+
+copied libgfortran-3.{def,dll,exp,lib} from older OpenBLAS
+ — deleted them
+
+got libgcc_s_seh-1.dll, libgfortran-3.dll, and libquadmath-0.dll from mingw64 zip on openblas source forge, and put in lib folder.
+
+created libopenblas.def in Visual Studio Command Line Tool by:
+  dumpbin /exports libopenblas.dll > libopenblas.def
+    and then delete everything but “EXPORTS” on top line and then function names.
+
+then
+  lib /def:libopenblas.def /MACHINE:X64 /OUT:libopenblas.lib
+
+
+AND
+
+  dumpbin /exports libgfortran-3.dll > libgfortran-3.def
+  …edit it…
+  lib /def:libgfortran-3.def /MACHINE:X64 /OUT:libgfortran-3.lib
+
+  dumpbin /exports libgcc_s_seh-1.dll > libgcc_s_seh-1.def
+  …edit it…
+  lib /def:libgcc_s_seh-1.def /MACHINE:X64 /OUT:libgcc_s_seh-1.lib
+
+  dumpbin /exports libquadmath-0.dll > libquadmath-0.def
+  …edit it…
+  lib /def:libquadmath-0.def /MACHINE:X64 /OUT:libquadmath-0.lib
